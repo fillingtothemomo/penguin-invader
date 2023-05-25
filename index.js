@@ -186,7 +186,7 @@ class Player{
                 y:0
             }
             this.invaders=[]
- const columns= Math.floor(Math.random() * 10 + 5)
+ const columns= Math.floor(Math.random() * 10 +5)
 
 const rows= Math.floor(Math.random() * 5 + 2)
 this.width= columns*50
@@ -231,6 +231,7 @@ const particles=[]
             pressed:false
         }
     }
+    let firstGridDestroyed = false;
     let frames=0
     let randomInterval = Math.floor( Math.random() *500 +500)
     let game ={
@@ -366,6 +367,7 @@ function animate()
                     }
                 else{
                    grids.splice (gridIndex,1)
+                   grids.push(new Grid()) 
                 }} 
 
                       },0)
@@ -389,12 +391,11 @@ player.rotation =0.15
         player.rotation =0
 
     }
-    if(frames % randomInterval ===0){
-      grids.push(new Grid())  
-      randomInterval = Math.floor( Math.random() *500 +500)
-      frames=0
-    }
     
+    if(frames==0){
+        grids.push(new Grid())
+        frames=0
+    }
     frames++
 
 }
