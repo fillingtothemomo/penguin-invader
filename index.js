@@ -15,6 +15,7 @@ class Player{
         this.opacity=1
         const image = new Image()
         image.src='blob-removebg-preview (2) (1).png'
+    
         
         image.onload = () => {
             this.image=image
@@ -252,6 +253,28 @@ const particles=[]
   radius:Math.random()*3,
   color: 'white'
 })) }
+function playHitSound() {
+    const hitSound = document.getElementById('hitSound');
+    hitSound.currentTime = 0; // Reset the sound to the beginning
+    hitSound.volume = 0.5;
+
+    hitSound.play();
+  }
+  function playKillSound() {
+    const hitSound = document.getElementById('killSound');
+    hitSound.currentTime = 0; // Reset the sound to the beginning
+    hitSound.volume = 0.5;
+
+    hitSound.play();
+  }
+  function playFireSound() {
+    const hitSound = document.getElementById('fireSound');
+    hitSound.currentTime = 0; // Reset the sound to the beginning
+    hitSound.volume = 0.5;
+
+    hitSound.play();
+  }
+  
     function createParticles({object,color,fades}){
         for(let i=0;i<15;i++)
         {  particles.push(new Particle({position:{
@@ -301,8 +324,10 @@ function animate()
         { 
             console.log('lose')
             setTimeout(() =>{
+                
             invaderProjectiles.splice(index,1)
             player.opacity=0
+            hitSound.play();
             game.over=true
         },0)
         setTimeout(() =>{
@@ -356,6 +381,7 @@ function animate()
                                 fades:true
                               })
                         grid.invaders.splice(i,1)
+                        playKillSound();
                         projectiles.splice(j,1)
                     if(grid.invaders.length >0 ){
                         const firstInvader = grid.invaders[0]
@@ -464,6 +490,7 @@ addEventListener('keydown', (event) => {
             break;
         case ' ':
             console.log('space');
+            playFireSound();
             projectiles.push(new Projectile({
                 position: {
                     x: player.position.x + player.width / 2,
@@ -473,6 +500,7 @@ addEventListener('keydown', (event) => {
                     x: 0,
                     y: 10
                 }
+                
             }));
             break;
     }
