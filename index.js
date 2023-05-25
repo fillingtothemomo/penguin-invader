@@ -253,6 +253,58 @@ const particles=[]
   radius:Math.random()*3,
   color: 'white'
 })) }
+function endGame() {
+    let startDiv = document.getElementById('start');
+    let gameCanvas = document.getElementById('canvas');
+    let gameOver = document.getElementById('over');
+    let playAgainButton = document.getElementById('playAgain');
+    hehe.innerHTML = score;
+
+    startDiv.style.display = 'none';
+    gameCanvas.style.display = 'none';
+    gameOver.style.display = 'block';
+    playAgainButton.style.display = 'block';
+  
+    game.active = true;
+    player.opacity = 1;
+    start();
+  }
+  
+function startGame() {
+    let startDiv = document.getElementById('start');
+    let gameCanvas = document.getElementById('canvas');
+    let endGame = document.getElementById('over');
+    let playAgainButton = document.getElementById('playAgain');
+  
+    startDiv.style.display = 'none';
+    gameCanvas.style.display = 'block';
+    endGame.style.display = 'none';
+    playAgainButton.style.display = 'none';
+  
+    // Reset game variables
+    game.over = false;
+    game.active = true;
+    score = 0;
+    scoreEl.innerHTML = score;
+    player.opacity = 1;
+    projectiles.length = 0;
+    grids.length = 0;
+    invaderProjectiles.length = 0;
+    particles.length = 0;
+  
+    // Re-initialize objects
+    player.position.x = canvas.width / 2 - player.height / 2;
+    player.velocity.x = 0;
+    player.rotation = 0;
+    grids.push(new Grid());
+    grids.velocity.x=4;
+    grids.velocity.y=0;
+    
+
+    animate();
+  }
+  
+
 function playHitSound() {
     const hitSound = document.getElementById('hitSound');
     hitSound.currentTime = 0; // Reset the sound to the beginning
@@ -332,6 +384,7 @@ function animate()
         },0)
         setTimeout(() =>{
             game.active=false
+endGame();
         },2000)
          
          createParticles({
