@@ -266,6 +266,7 @@ function endGame() {
     playAgainButton.style.display = 'block';
   
     game.active = true;
+    game.over=true;
     player.opacity = 1;
     start();
   }
@@ -312,6 +313,15 @@ function playHitSound() {
 
     hitSound.play();
   }
+  function stopHitSound() {
+    const hitSound = document.getElementById('hitSound');
+    hitSound.currentTime = 0; // Reset the sound to the beginning
+  
+    hitSound.pause(); // Use pause() instead of play()
+  
+    
+  }
+  
   function playKillSound() {
     const hitSound = document.getElementById('killSound');
     hitSound.currentTime = 0; // Reset the sound to the beginning
@@ -349,6 +359,7 @@ function animate()
     c.fillStyle='black'
     c.fillRect(0,0,canvas.width,canvas.height)
     player.update()
+    if(game.over) stopHitSound();
     particles.forEach((particle,i)=>{
         if(canvas.height-particle.position.y -particle.radius >= canvas.height)
         {
@@ -480,8 +491,10 @@ player.rotation =0.15
 }
 animate()
 addEventListener('keydown', (event) => {
-    if(game.over) return
-    switch (event.key) {
+    if(game.over) 
+    
+{return}
+    else{switch (event.key) {
         case 'a':
             console.log('left');
             keys.a.pressed = true;
@@ -503,61 +516,9 @@ addEventListener('keydown', (event) => {
                 }
             }));
             break;
-    }
+    }}
 });
 
-addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'a':
-            console.log('left');
-            keys.a.pressed = true;
-            break;
-        case 'd':
-            console.log('right');
-            keys.d.pressed = true;
-            break;
-        case ' ':
-            console.log('space');
-            projectiles.push(new Projectile({
-                position: {
-                    x: player.position.x + player.width / 2,
-                    y: player.position.y + player.height
-                },
-                velocity: {
-                    x: 0,
-                    y: 10
-                }
-            }));
-            break;
-    }
-});
-addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'a':
-            console.log('left');
-            keys.a.pressed = true;
-            break;
-        case 'd':
-            console.log('right');
-            keys.d.pressed = true;
-            break;
-        case ' ':
-            console.log('space');
-            playFireSound();
-            projectiles.push(new Projectile({
-                position: {
-                    x: player.position.x + player.width / 2,
-                    y: player.position.y + player.height
-                },
-                velocity: {
-                    x: 0,
-                    y: 10
-                }
-                
-            }));
-            break;
-    }
-});
 
 addEventListener('keyup', (event) => {
     switch (event.key) {
@@ -575,18 +536,3 @@ addEventListener('keyup', (event) => {
     }
 });
 
-addEventListener('keyup', (event) => {
-    switch (event.key) {
-        case 'a':
-            console.log('left');
-            keys.a.pressed = false;
-            break;
-        case 'd':
-            console.log('right');
-            keys.d.pressed = false;
-            break;
-        case ' ':
-            console.log('space');
-            break;
-    }
-});
